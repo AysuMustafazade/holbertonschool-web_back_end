@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''module 0-simple_helper_function'''
+'''module for index_range function.'''
 
 
 def index_range(page, page_size):
