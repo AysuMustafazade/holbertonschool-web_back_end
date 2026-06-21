@@ -1,0 +1,5 @@
+// add a new attribute
+db.collectionName.update(
+  { name: "Holberton school" },
+  { $set: { address: "972 Mission street" } }
+)
