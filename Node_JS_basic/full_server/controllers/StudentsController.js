@@ -1,6 +1,6 @@
 const readDatabase = require('../utils');
 
-const DB_FILE = process.argv.find((arg) => arg.endsWith('.csv')) || 'database.csv';
+const DB_FILE = process.argv.find((arg) => arg.endsWith('.csv'));
 
 class StudentsController {
   static getAllStudents(req, res) {
@@ -14,7 +14,9 @@ class StudentsController {
 
         sortedFields.forEach((field) => {
           const list = fields[field];
-          output.push(`Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`);
+          output.push(
+            `Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`
+          );
         });
 
         res.status(200).send(output.join('\n'));
