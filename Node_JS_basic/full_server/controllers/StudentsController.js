@@ -1,10 +1,10 @@
 const readDatabase = require('../utils');
 
-const DB_FILE = process.argv.find((arg) => arg.endsWith('.csv'));
-
 class StudentsController {
   static getAllStudents(req, res) {
-    readDatabase(DB_FILE)
+    const dbFile = process.argv[2];
+
+    readDatabase(dbFile)
       .then((fields) => {
         const output = ['This is the list of our students'];
 
@@ -14,9 +14,7 @@ class StudentsController {
 
         sortedFields.forEach((field) => {
           const list = fields[field];
-          output.push(
-            `Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`
-          );
+          output.push(`Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`);
         });
 
         res.status(200).send(output.join('\n'));
@@ -34,7 +32,9 @@ class StudentsController {
       return;
     }
 
-    readDatabase(DB_FILE)
+    const dbFile = process.argv[2];
+
+    readDatabase(dbFile)
       .then((fields) => {
         const list = fields[major] || [];
         res.status(200).send(`List: ${list.join(', ')}`);
