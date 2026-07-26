@@ -1,4 +1,7 @@
+const express = require('express');
 const fs = require('fs');
+
+const DB_FILE = process.argv[2];
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
@@ -24,16 +27,35 @@ function countStudents(path) {
         fields[field].push(firstname);
       });
 
-      console.log(`Number of students: ${students.length}`);
+      const output = [];
+      output.push(`Number of students: ${students.length}`);
 
       Object.keys(fields).forEach((field) => {
         const list = fields[field];
-        console.log(`Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`);
+        output.push(`Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`);
       });
 
-      resolve();
+      resolve(output.join('\n'));
     });
   });
 }
 
-module.exports = countStudents;
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello Holberton School!');
+});
+
+app.get('/students', (req, res) => {
+  countStudents(DB_FILE)
+    .then((report) => {
+      res.send(`This is the list of our students\n${report}`);
+    })
+    .catch((err) => {
+      res.send(`This is the list of our students\n${err.message}`);
+    });
+});
+
+app.listen(1245);
+
+module.exports = app;
