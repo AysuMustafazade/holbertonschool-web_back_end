@@ -1,6 +1,6 @@
 const readDatabase = require('../utils');
 
-const DB_FILE = process.argv.find((arg) => arg.endsWith('.csv')) || 'database.csv';
+const DB_FILE = process.argv.find((arg) => arg.endsWith('.csv'));
 
 class StudentsController {
   static getAllStudents(req, res) {
